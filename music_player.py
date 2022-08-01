@@ -1,0 +1,117 @@
+import vlc
+from time import sleep
+
+DEBUG = False
+
+#   нажатие на play
+#   музыка играет
+#   нажатие на переключить на следующий
+#   если музыка играла
+#   музыка переключается и продолжает играть
+#
+#
+#   музыка не играет
+#   нажатие на переключить на следующий
+#   если музыка НЕ играла
+#   музыка переключается и продолжает НЕ играть
+#   нажатие на play
+#   музыка играет
+
+
+class MusicPlayer:
+    def __init__(self):
+        self.player = vlc.MediaPlayer()
+        self.__is_play = True
+        self.__is_pause = True
+        self.__song_length = None
+        self.track = None
+
+    def set_audio(self, music_path: str):
+        """Set audio for play"""
+        self.track = vlc.Media(music_path)
+        self.player.set_media(self.track)
+        sleep(0.2)
+        # self.__set_length()
+
+        if DEBUG:
+            print(f"\tGet path: {music_path}")
+            print(f"\ttrack is: {self.track}")
+            print(f"\tPlayer media: {self.player.get_media()}")
+
+    def play(self, *args):
+        """Start playing current audio file"""
+        self.player.play()
+        self.__is_pause = False
+
+        if DEBUG:
+            print(f"is pause: {self.__is_pause}")
+            print(f"is play: {self.__is_play}")
+
+    def pause(self, *args):
+        """Pause the playing audio"""
+        if not self.__is_pause:
+            self.player.pause()
+            self.__is_pause = True
+
+        if DEBUG:
+            print(f"is pause: {self.__is_pause}")
+            print(f"is play: {self.__is_play}")
+
+    def stop(self, *args):
+        """Stop the playing audio"""
+        self.player.stop()
+        # self.__is_play = False
+
+        if DEBUG:
+            print(f"is pause: {self.__is_pause}")
+            print(f"is play: {self.__is_play}")
+
+    def rewind(self, new_pos: int, *args):
+        """Rewind a song with a new positional in ms"""
+        self.player.set_time(new_pos)
+
+        if DEBUG:
+            print(f"\tnew position: {self.player.get_time()}")
+
+    def change_volume(self, value: int, *args):
+        """Set the audio volume
+            in range: 0-125"""
+        self.player.audio_set_volume(value)
+
+        if DEBUG:
+            print(f"\tnew volume is: {self.player.audio_get_volume()}")
+
+    def get_song_position(self, *args):
+        """Return a position from play in ms"""
+        return self.player.get_time()
+
+    @property
+    def song_length(self):
+        # print(f"song length: {self.__song_length}")
+        return self.player.get_length()
+
+    def get_state(self):
+        return self.player.get_state()
+
+    # def __set_length(self):
+    #     print(f"song length from vlc: {self.player.get_length()}")
+    #     self.__song_length = self.player.get_length()
+
+
+if __name__ == "__main__":
+    p = MusicPlayer()
+    p.set_audio('/home/konnor/Music/luna_lutik.mp3')
+    # sleep(0.1)
+    print(f"LENGTH: {p.player.get_length()}")
+    print(f"Current length: {p.song_length}")
+    p.play()
+    input("play...")
+    p.pause()
+    print(p.get_song_position())
+    input("pause...")
+    p.play()
+    input("play...")
+    print(p.get_song_position())
+    print(f"LENGTH: {p.player.get_length()}")
+    print(f"Current length: {p.song_length}")
+    p.stop()
