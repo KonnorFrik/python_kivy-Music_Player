@@ -2,11 +2,12 @@ import music_player
 import os
 
 # folder with playlist's folder's
-BASIC_MUSIC_DIR = "/path/to_your/Music/"
-DEBUG = False
+BASIC_MUSIC_DIR = "/home/konnor/Music/"
 
 
 class PlayListManager(music_player.MusicPlayer):
+    DEBUG = False
+    
     def __init__(self):
         super().__init__()
         # get all playlist's folder names
@@ -21,7 +22,7 @@ class PlayListManager(music_player.MusicPlayer):
         self.__song_number = 0
         self._set_new_audio(self._current_song_list[self.__song_number])  # !!!!!!!!!!!
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"\nset audio path: {BASIC_MUSIC_DIR + self.current_playlist_name + '/' + self._current_song_list[self.__song_number]}")
             print(f"all playlists: {self._all_playlists}")
             print(f"Current playlist a: {self.current_playlist_name}")
@@ -34,7 +35,7 @@ class PlayListManager(music_player.MusicPlayer):
         self.__song_number += 1
         try:    # 'try' for prevent IndexError
             song = self._current_song_list[self.__song_number]
-            if DEBUG:
+            if self.DEBUG:
                 print(f"\nin 'try', index for playlist: {self.__song_number} and item from list: {self._current_song_list[self.__song_number]}")
                 print(f"song in 'try' in 'next: {song}")
                 print('')
@@ -42,7 +43,7 @@ class PlayListManager(music_player.MusicPlayer):
             self.__song_number = 0
             song = self._current_song_list[self.__song_number]
             # self.stop()  # ???
-            if DEBUG:
+            if self.DEBUG:
                 print(f"\nin 'except', index for playlist: {self.__song_number} and item from list: {self._current_song_list[self.__song_number]}")
                 print(f"song in 'except' in 'next: {song}")
                 print('')
@@ -57,7 +58,7 @@ class PlayListManager(music_player.MusicPlayer):
             self.__song_number = len(self._current_song_list) - 1
 
         song = self._current_song_list[self.__song_number]
-        if DEBUG:
+        if self.DEBUG:
             print(f"")
         self._set_new_audio(song)
         # self.play()
@@ -84,7 +85,7 @@ class PlayListManager(music_player.MusicPlayer):
 
         self._current_song_list = [file for file in os.listdir(current_folder) if os.path.isfile(current_folder + file)]
 
-        if DEBUG:
+        if self.DEBUG:
             print(F"\n\tfolder path is {folder_path}")
             print(F"\tcurrent folder is {current_folder}")
             print(f"\tNew song list: {self._current_song_list}")
@@ -98,13 +99,13 @@ class PlayListManager(music_player.MusicPlayer):
         self.__song_number = 0  # reset a index
         self._set_new_audio(self._current_song_list[self.__song_number])
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"\nchange playlist to: {self.current_playlist_name}")
             print('')
 
     def _set_new_audio(self, song_name):
         self.set_audio(BASIC_MUSIC_DIR + self.current_playlist_name + '/' + song_name)
-        if DEBUG:
+        if self.DEBUG:
             print(f"\nchoose song: {song_name}")
 
 

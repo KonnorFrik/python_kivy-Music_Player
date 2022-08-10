@@ -1,8 +1,6 @@
 import vlc
 from time import sleep
 
-DEBUG = False
-
 #   нажатие на play
 #   музыка играет
 #   нажатие на переключить на следующий
@@ -19,6 +17,8 @@ DEBUG = False
 
 
 class MusicPlayer:
+    DEBUG = False
+    
     def __init__(self):
         self.player = vlc.MediaPlayer()
         self.__is_play = True
@@ -33,7 +33,7 @@ class MusicPlayer:
         sleep(0.2)
         # self.__set_length()
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"\tGet path: {music_path}")
             print(f"\ttrack is: {self.track}")
             print(f"\tPlayer media: {self.player.get_media()}")
@@ -43,7 +43,7 @@ class MusicPlayer:
         self.player.play()
         self.__is_pause = False
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"is pause: {self.__is_pause}")
             print(f"is play: {self.__is_play}")
 
@@ -53,7 +53,7 @@ class MusicPlayer:
             self.player.pause()
             self.__is_pause = True
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"is pause: {self.__is_pause}")
             print(f"is play: {self.__is_play}")
 
@@ -62,7 +62,7 @@ class MusicPlayer:
         self.player.stop()
         # self.__is_play = False
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"is pause: {self.__is_pause}")
             print(f"is play: {self.__is_play}")
 
@@ -70,7 +70,7 @@ class MusicPlayer:
         """Rewind a song with a new positional in ms"""
         self.player.set_time(new_pos)
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"\tnew position: {self.player.get_time()}")
 
     def change_volume(self, value: int, *args):
@@ -78,7 +78,7 @@ class MusicPlayer:
             in range: 0-125"""
         self.player.audio_set_volume(value)
 
-        if DEBUG:
+        if self.DEBUG:
             print(f"\tnew volume is: {self.player.audio_get_volume()}")
 
     def get_song_position(self, *args):
