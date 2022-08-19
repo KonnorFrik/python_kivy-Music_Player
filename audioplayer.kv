@@ -1,0 +1,113 @@
+<MovableLabel>:
+    background_color: 0, 0, 0, 0.7
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<SwitchPlaylistLayerButton@Button>
+
+<ActionButton@Button>:
+    background_color: 90 / 255, 90 / 255, 90 / 255, 1
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    size_hint: 1, 1
+    font_size: 25
+
+<SongNameLabel@Label>:
+    font_size: 35
+    color: 0, 0, 0, 1   # BLACK for letter
+
+<VolumeSlider@Slider>:
+    background_color: 160 / 255, 160 / 255, 160 / 255, 1
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    orientation: 'vertical'
+    min: 15
+    max: 125
+    step: 1
+    value_track: True
+    value_track_color: 1, 0, 0, 1   # RED
+    value: 65
+    cursor_size: 0, 0
+
+<MainBoxLayout@BoxLayout>:
+    orientation: 'vertical'
+
+<AdditionalBoxLayout@BoxLayout>:
+    spacing: 2
+    orientation: 'horizontal'
+
+
+<MainFloatLayout>:
+    id: main_float_layout
+    background_label: move_background_label
+    switch_playlists_button: switch_button
+    scroll_grid_playlists: scroll_obj
+    main_box: main_box_lay
+    second_box: additional_box
+    song_name_label: song_name
+    image: image
+    previous_button: previous_button
+    pause_button: pause_button
+    play_button: play_button
+    next_button: next_button
+    volume_slider: volume_slider
+
+    MainBoxLayout:
+        id: main_box_lay
+
+        SongNameLabel:
+            id: song_name
+            size_hint: 1, 0.5
+
+        Image:
+            id: image
+            size_hint: 1, 6
+
+        AdditionalBoxLayout:
+            id: additional_box
+
+            ActionButton:
+                id: previous_button
+                text: "Previous"
+            ActionButton:
+                id: pause_button
+                text: "Pause"
+            ActionButton:
+                id: play_button
+                text: "Play"
+            ActionButton:
+                id: next_button
+                text: "Next"
+            VolumeSlider:
+                id: volume_slider
+
+
+    MovableLabel:
+        id: move_background_label
+        size_hint: None, None
+        size: main_float_layout.width - 100, main_float_layout.height
+
+        ScrollView:
+            id: scroll_obj
+            size: move_background_label.size
+            pos: move_background_label.pos
+
+    SwitchPlaylistLayerButton:
+        id: switch_button
+        font_size: 20
+        text: "Playlists"
+        size_hint: None, None
+        size: 85, 50
+        pos: main_float_layout.width - self.width, main_float_layout.height - self.height

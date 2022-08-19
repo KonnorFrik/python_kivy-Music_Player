@@ -2,7 +2,7 @@ import music_player
 import os
 
 # folder with playlist's folder's
-BASIC_MUSIC_DIR = "/home/konnor/Music/"
+BASIC_MUSIC_DIR = "/home/user/Music/"
 
 
 class PlayListManager(music_player.MusicPlayer):
@@ -11,11 +11,11 @@ class PlayListManager(music_player.MusicPlayer):
     def __init__(self):
         super().__init__()
         # get all playlist's folder names
-        self._all_playlists = [file for file in os.listdir(BASIC_MUSIC_DIR) if os.path.isdir(BASIC_MUSIC_DIR+file)]
+        self._all_playlists = ["main"] + [file for file in os.listdir(BASIC_MUSIC_DIR) if os.path.isdir(BASIC_MUSIC_DIR+file)]
         self.current_playlist_name = self._all_playlists[0]  # choose 1st playlist for play
 
         # create song list for current playlist
-        self._current_song_list = None
+        self._current_song_list: list
         self.create_playlist(self.current_playlist_name)
 
         # choose 1st song for play
@@ -79,14 +79,16 @@ class PlayListManager(music_player.MusicPlayer):
     
     def create_playlist(self, folder_path):
         """Create playlist by taking song files names from playlist folder"""
+        path = folder_path
         if folder_path[-1] != '/':  # add separate
-            folder_path += '/'
-        current_folder = BASIC_MUSIC_DIR + folder_path  # make valid path to playlist folder
+            path = folder_path + '/'
+
+        current_folder = BASIC_MUSIC_DIR if folder_path == "main" else BASIC_MUSIC_DIR + path  # make valid path to playlist folder
 
         self._current_song_list = [file for file in os.listdir(current_folder) if os.path.isfile(current_folder + file)]
 
         if self.DEBUG:
-            print(F"\n\tfolder path is {folder_path}")
+            print(F"\n\tfolder path is {path}")
             print(F"\tcurrent folder is {current_folder}")
             print(f"\tNew song list: {self._current_song_list}")
             print('')
@@ -104,7 +106,11 @@ class PlayListManager(music_player.MusicPlayer):
             print('')
 
     def _set_new_audio(self, song_name):
-        self.set_audio(BASIC_MUSIC_DIR + self.current_playlist_name + '/' + song_name)
+        if self.current_playlist_name != "main":
+            self.set_audio(BASIC_MUSIC_DIR + self.current_playlist_name + '/' + song_name)
+        else:
+            self.set_audio(BASIC_MUSIC_DIR + song_name)
+
         if self.DEBUG:
             print(f"\nchoose song: {song_name}")
 
