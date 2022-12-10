@@ -83,21 +83,3 @@ class MusicPlayer:
     #     print(f"song length from vlc: {self.player.get_length()}")
     #     self.__song_length = self.player.get_length()
 
-
-if __name__ == "__main__":
-    p = MusicPlayer()
-    p.set_audio('/home/konnor/Music/luna_lutik.mp3')
-    # sleep(0.1)
-    print(f"LENGTH: {p.player.get_length()}")
-    print(f"Current length: {p.song_length}")
-    p.play()
-    input("play...")
-    p.pause()
-    print(p.get_song_position())
-    input("pause...")
-    p.play()
-    input("play...")
-    print(p.get_song_position())
-    print(f"LENGTH: {p.player.get_length()}")
-    print(f"Current length: {p.song_length}")
-    p.stop()
