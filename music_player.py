@@ -1,8 +1,6 @@
 import vlc
 from time import sleep
 
-
-
 class MusicPlayer:
     DEBUG = False
 
@@ -83,5 +81,4 @@ class MusicPlayer:
     # def __set_length(self):
     #     print(f"song length from vlc: {self.player.get_length()}")
     #     self.__song_length = self.player.get_length()
-
 

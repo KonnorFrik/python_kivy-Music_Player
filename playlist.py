@@ -2,7 +2,12 @@ import music_player
 import os
 
 # folder with playlist's folder's
-BASIC_MUSIC_DIR = "/home/user/Music/"
+try:
+    name = os.popen('whoami').read().strip()
+except Exception:
+    print("Can't recognize a user name\nPlease write a music folder manualy in 'playlist.py' file in 'BASIC_MUSIC_DIR' as string")
+
+BASIC_MUSIC_DIR = f"/home/{name}/Music/"
 
 
 class PlayListManager(music_player.MusicPlayer):
@@ -20,7 +25,7 @@ class PlayListManager(music_player.MusicPlayer):
 
         # choose 1st song for play
         self.__song_number = 0
-        self._set_new_audio(self._current_song_list[self.__song_number])  # !!!!!!!!!!!
+        self._set_new_audio(self._current_song_list[self.__song_number])  
 
         if self.DEBUG:
             print(f"\nset audio path: {BASIC_MUSIC_DIR + self.current_playlist_name + '/' + self._current_song_list[self.__song_number]}")
