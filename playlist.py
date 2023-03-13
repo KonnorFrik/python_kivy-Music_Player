@@ -7,7 +7,7 @@ BASIC_MUSIC_DIR = "/home/user/Music/"
 
 class PlayListManager(music_player.MusicPlayer):
     DEBUG = False
-    
+
     def __init__(self):
         super().__init__()
         # get all playlist's folder names
@@ -33,16 +33,18 @@ class PlayListManager(music_player.MusicPlayer):
     def next(self, *args):
         """Set next audio to play from playlist folder"""
         self.__song_number += 1
+
         try:    # 'try' for prevent IndexError
             song = self._current_song_list[self.__song_number]
             if self.DEBUG:
                 print(f"\nin 'try', index for playlist: {self.__song_number} and item from list: {self._current_song_list[self.__song_number]}")
                 print(f"song in 'try' in 'next: {song}")
                 print('')
+
         except IndexError:
             self.__song_number = 0
             song = self._current_song_list[self.__song_number]
-            # self.stop()  # ???
+
             if self.DEBUG:
                 print(f"\nin 'except', index for playlist: {self.__song_number} and item from list: {self._current_song_list[self.__song_number]}")
                 print(f"song in 'except' in 'next: {song}")
@@ -73,10 +75,10 @@ class PlayListManager(music_player.MusicPlayer):
     def get_all_playlists_name(self) -> list[str]:
         """Get all playlists folder names"""
         return self._all_playlists.copy()
-    
+
     def get_all_songs_in_playlist(self) -> list[str]:
         return self._current_song_list
-    
+
     def create_playlist(self, folder_path):
         """Create playlist by taking song files names from playlist folder"""
         path = folder_path
@@ -114,7 +116,3 @@ class PlayListManager(music_player.MusicPlayer):
         if self.DEBUG:
             print(f"\nchoose song: {song_name}")
 
-
-if __name__ == "__main__":
-    test = PlayListManager()
-    test.change_playlist('Красная плесень')

@@ -1,24 +1,11 @@
 import vlc
 from time import sleep
 
-#   нажатие на play
-#   музыка играет
-#   нажатие на переключить на следующий
-#   если музыка играла
-#   музыка переключается и продолжает играть
-#
-#
-#   музыка не играет
-#   нажатие на переключить на следующий
-#   если музыка НЕ играла
-#   музыка переключается и продолжает НЕ играть
-#   нажатие на play
-#   музыка играет
 
 
 class MusicPlayer:
     DEBUG = False
-    
+
     def __init__(self):
         self.player = vlc.MediaPlayer()
         self.__is_play = True
@@ -98,20 +85,3 @@ class MusicPlayer:
     #     self.__song_length = self.player.get_length()
 
 
-if __name__ == "__main__":
-    p = MusicPlayer()
-    p.set_audio('/home/konnor/Music/luna_lutik.mp3')
-    # sleep(0.1)
-    print(f"LENGTH: {p.player.get_length()}")
-    print(f"Current length: {p.song_length}")
-    p.play()
-    input("play...")
-    p.pause()
-    print(p.get_song_position())
-    input("pause...")
-    p.play()
-    input("play...")
-    print(p.get_song_position())
-    print(f"LENGTH: {p.player.get_length()}")
-    print(f"Current length: {p.song_length}")
-    p.stop()
